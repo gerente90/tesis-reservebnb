@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Haven - Hotel de Lujo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Luxury Haven</h1>
+                <p>Experiencias inolvidables</p>
+            </div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#habitaciones">Habitaciones</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li class="reserva-btn"><a href="#reservar">Reservar</a></li>
+                </ul>
+            </nav>
+            <button id="menu-toggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="hero-content">
+                <h2>Bienvenido a Luxury Haven</h2>
+                <p>Descubre el lujo redefinido en nuestro exclusivo hotel</p>
+                <a href="#reservar" class="btn-primary">Reservar ahora</a>
+            </div>
+        </section>
+
+        <section id="habitaciones" class="rooms-section">
+            <div class="container">
+                <h2 class="section-title">Nuestras Habitaciones</h2>
+                <p class="section-subtitle">Selecciona tu espacio perfecto</p>
+                
+                <div class="rooms-grid" id="rooms-container">
+                    <!-- Las habitaciones se cargarán dinámicamente desde db.js -->
+                </div>
+            </div>
+        </section>
+
+        <section id="servicios" class="services-section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Restaurante Gourmet</h3>
+                        <p>Experiencia culinaria de primera clase con chefs internacionales.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-spa"></i>
+                        <h3>Spa & Bienestar</h3>
+                        <p>Tratamientos relajantes para rejuvenecer cuerpo y mente.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-swimming-pool"></i>
+                        <h3>Piscina Infinity</h3>
+                        <p>Disfruta de vistas panorámicas desde nuestra piscina.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-wifi"></i>
+                        <h3>WiFi de Alta Velocidad</h3>
+                        <p>Conexión gratuita en todas las áreas del hotel.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reservar" class="reservation-section">
+            <div class="container">
+                <h2 class="section-title">Reserva tu Estancia</h2>
+                <div class="reservation-form-container">
+                    <form id="reservation-form" class="reservation-form">
+                        <div class="form-group">
+                            <label for="room-type">Tipo de Habitación</label>
+                            <select id="room-type" name="room-type" required>
+                                <option value="">Seleccione una habitación</option>
+                                <!-- Opciones se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="check-in">Fecha de Entrada</label>
+                            <input type="date" id="check-in" name="check-in" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="check-out">Fecha de Salida</label>
+                            <input type="date" id="check-out" name="check-out" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Número de Huéspedes</label>
+                            <input type="number" id="guests" name="guests" min="1" max="4" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Nombre Completo</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Confirmar Reserva</button>
+                    </form>
+                    <div class="reservation-summary">
+                        <h3>Tu Reserva</h3>
+                        <div id="reservation-details">
+                            <p>Selecciona una habitación para ver los detalles</p>
+                        </div>
+                        <div class="price-summary">
+                            <p>Total estimado: <span id="total-price">$0</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mis-reservas" class="my-reservations">
+            <div class="container">
+                <h2 class="section-title">Mis Reservas</h2>
+                <div class="reservations-list" id="reservations-container">
+                    <!-- Las reservas se cargarán dinámicamente -->
+                    <p id="no-reservations">No tienes reservas actualmente.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Contacto</h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Información de Contacto</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Av. del Lujo 123, Ciudad Elegante</p>
+                        <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                        <p><i class="fas fa-envelope"></i> info@luxuryhaven.com</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="contact-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215209126327!2d-73.987844924266!3d40.75798597138939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Luxury Haven</h3>
+                    <p>Redefiniendo la experiencia hotelera con lujo, comodidad y servicio excepcional.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#habitaciones">Habitaciones</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Cancelación</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Luxury Haven. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-title">Reserva Confirmada</h2>
+            <p id="modal-message">Tu reserva ha sido confirmada con éxito.</p>
+            <button id="modal-button" class="btn-primary">Aceptar</button>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="reservas.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
