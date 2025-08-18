@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Reservebnb</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>Reservebnb</h1>
+        <p>Admin Dashboard</p>
+      </div>
+      <button id="logout-btn" class="btn-primary">Cerrar Sesión</button>
+    </div>
+  </header>
+  <section class="admin-section" style="padding: 80px 0;">
+    <div class="container">
+      <h2 class="section-title">Administrar Hospedajes</h2>
+      <form id="listing-form">
+        <input type="hidden" id="listing-id">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <textarea id="descripcion" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="imagen">URL de Imagen:</label>
+          <input type="text" id="imagen" required>
+        </div>
+        <div class="form-group">
+          <label for="capacidad">Capacidad:</label>
+          <input type="number" id="capacidad" required>
+        </div>
+        <div class="form-group">
+          <label for="camas">Camas:</label>
+          <input type="text" id="camas" required>
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio por Noche:</label>
+          <input type="number" id="precio" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="servicios">Servicios (separados por comas):</label>
+          <input type="text" id="servicios" required>
+        </div>
+        <button type="submit" class="btn-primary">Guardar</button>
+      </form>
+      <div id="listings-list" style="margin-top: 40px;"></div>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
