@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   $${habitacion.precio}<span>/noche</span>
                 </div>
               </div>
+              <a href="${habitacion.airbnb_link || '#'}" target="_blank" class="btn-primary">Reservar en Airbnb</a>
             </div>
           `;
           roomsContainer.appendChild(roomCard);
@@ -102,11 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const guestsInput = document.getElementById('guests');
     const totalPriceElement = document.getElementById('total-price');
     const reservationDetails = document.getElementById('reservation-details');
-
     const today = new Date().toISOString().split('T')[0];
     checkInInput.min = today;
     checkOutInput.min = today;
-
     checkInInput.addEventListener('change', function() {
       checkOutInput.min = this.value;
       if (checkOutInput.value < this.value) {
@@ -114,11 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       actualizarPrecioTotal();
     });
-
     checkOutInput.addEventListener('change', actualizarPrecioTotal);
     roomTypeSelect.addEventListener('change', actualizarPrecioTotal);
     guestsInput.addEventListener('change', actualizarPrecioTotal);
-
     async function actualizarPrecioTotal() {
       const habitacionId = parseInt(roomTypeSelect.value);
       if (!habitacionId || !checkInInput.value || !checkOutInput.value) {
@@ -155,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Error al cargar detalles de habitación: ' + err.message);
       }
     }
-
     reservationForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const habitacionId = parseInt(roomTypeSelect.value);
@@ -216,11 +212,13 @@ document.addEventListener('DOMContentLoaded', function() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
         });
+        console.log('Respuesta de /api/auth/login:', response.status, response.statusText);
         if (!response.ok) throw new Error('Error en login: ' + response.statusText);
         const data = await response.json();
+        console.log('Datos recibidos:', data);
         if (data.token) {
           localStorage.setItem('token', data.token);
-          console.log('Token guardado, redirigiendo a /admin.html');
+          console.log('Token guardado:', localStorage.getItem('token'));
           window.location.href = '/admin.html';
         } else {
           console.log('Login fallido: no token recibido');
@@ -236,125 +234,134 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Lógica para admin.html
-// Lógica para admin.html
-const listingForm = document.getElementById('listing-form');
-const listingsList = document.getElementById('listings-list');
-const logoutBtn = document.getElementById('logout-btn');
+  const listingForm = document.getElementById('listing-form');
+  const listingsList = document.getElementById('listings-list');
+  const logoutBtn = document.getElementById('logout-btn');
 
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('token');
-    window.location.href = '/index.html';
-    console.log('Sesión cerrada');
-  });
-}
-
-if (listingForm && listingsList) {
-  async function loadListings() {
-    try {
-      console.log('Cargando listings para admin, token:', localStorage.getItem('token'));
-      const response = await fetch('http://localhost:5001/api/listings', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-      });
-      if (!response.ok) throw new Error('No autorizado o error en API: ' + response.statusText);
-      const listings = await response.json();
-      listingsList.innerHTML = '';
-      listings.forEach(listing => {
-        const div = document.createElement('div');
-        div.className = 'room-card';
-        div.innerHTML = `
-          <h3>${listing.nombre}</h3>
-          <p>${listing.descripcion}</p>
-          <p>Capacidad: ${listing.capacidad}</p>
-          <p>Camas: ${listing.camas}</p>
-          <p>Precio: $${listing.precio}</p>
-          <button onclick="editListing(${listing.id})">Editar</button>
-          <button onclick="deleteListing(${listing.id})">Eliminar</button>
-        `;
-        listingsList.appendChild(div);
-      });
-    } catch (err) {
-      console.error('Error al cargar hospedajes:', err);
-      alert('Error al cargar hospedajes: ' + err.message);
-    }
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('token');
+      window.location.href = '/index.html';
+      console.log('Sesión cerrada');
+    });
   }
 
-  loadListings();
-
-  listingForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = document.getElementById('listing-id').value;
-    const listing = {
-      nombre: document.getElementById('nombre').value,
-      descripcion: document.getElementById('descripcion').value,
-      imagen: document.getElementById('imagen').value,
-      capacidad: parseInt(document.getElementById('capacidad').value),
-      camas: document.getElementById('camas').value,
-      precio: parseFloat(document.getElementById('precio').value),
-      servicios: document.getElementById('servicios').value.split(',').map(s => s.trim())
-    };
-    try {
-      console.log('Guardando hospedaje:', id ? 'Actualizar ID ' + id : 'Crear nuevo', 'Payload:', listing);
-      console.log('Token enviado:', localStorage.getItem('token'));
-      const method = id ? 'PUT' : 'POST';
-      const url = id ? `http://localhost:5001/api/listings/${id}` : 'http://localhost:5001/api/listings';
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(listing)
-      });
-      if (!response.ok) throw new Error('Error al guardar: ' + response.statusText);
-      listingForm.reset();
-      document.getElementById('listing-id').value = '';
-      loadListings();
-      alert(id ? 'Hospedaje actualizado' : 'Hospedaje creado');
-    } catch (err) {
-      console.error('Error al guardar hospedaje:', err);
-      alert('Error al guardar hospedaje: ' + err.message);
-    }
-  });
-
-  window.editListing = async (id) => {
-    try {
-      console.log('Cargando hospedaje para editar:', id);
-      const response = await fetch(`http://localhost:5001/api/listings/${id}`);
-      if (!response.ok) throw new Error('No encontrado');
-      const listing = await response.json();
-      document.getElementById('listing-id').value = listing.id;
-      document.getElementById('nombre').value = listing.nombre;
-      document.getElementById('descripcion').value = listing.descripcion;
-      document.getElementById('imagen').value = listing.imagen;
-      document.getElementById('capacidad').value = listing.capacidad;
-      document.getElementById('camas').value = listing.camas;
-      document.getElementById('precio').value = listing.precio;
-      document.getElementById('servicios').value = listing.servicios.join(', ');
-    } catch (err) {
-      console.error('Error al cargar hospedaje:', err);
-      alert('Error al cargar hospedaje para editar: ' + err.message);
-    }
-  };
-
-  window.deleteListing = async (id) => {
-    if (confirm('¿Estás seguro de eliminar este hospedaje?')) {
+  if (listingForm && listingsList) {
+    async function loadListings() {
       try {
-        console.log('Eliminando hospedaje:', id);
-        const response = await fetch(`http://localhost:5001/api/listings/${id}`, {
-          method: 'DELETE',
+        console.log('Cargando listings para admin, token:', localStorage.getItem('token'));
+        const response = await fetch('http://localhost:5001/api/listings', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
-        if (!response.ok) throw new Error('Error al eliminar');
-        loadListings();
-        alert('Hospedaje eliminado');
+        if (!response.ok) throw new Error('No autorizado o error en API: ' + response.statusText);
+        const listings = await response.json();
+        listingsList.innerHTML = '';
+        listings.forEach(listing => {
+          const div = document.createElement('div');
+          div.className = 'room-card';
+          div.innerHTML = `
+            <h3>${listing.nombre}</h3>
+            <p>${listing.descripcion}</p>
+            <p>Capacidad: ${listing.capacidad}</p>
+            <p>Camas: ${listing.camas}</p>
+            <p>Precio: $${listing.precio}</p>
+            <p>Link Airbnb: <a href="${listing.airbnb_link || '#'}" target="_blank">${listing.airbnb_link || 'No disponible'}</a></p>
+            <a href="${listing.airbnb_link || '#'}" target="_blank" class="btn-primary">Reservar en Airbnb</a>
+            <button onclick="editListing(${listing.id})">Editar</button>
+            <button onclick="deleteListing(${listing.id})">Eliminar</button>
+          `;
+          listingsList.appendChild(div);
+        });
       } catch (err) {
-        console.error('Error al eliminar:', err);
-        alert('Error al eliminar: ' + err.message);
+        console.error('Error al cargar hospedajes:', err);
+        alert('Error al cargar hospedajes: ' + err.message);
       }
     }
-  };
-}
+
+    loadListings();
+
+    listingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('listing-id').value;
+      const airbnbLinkInput = document.getElementById('airbnb_link').value;
+      console.log('Valor de airbnb_link antes de enviar:', airbnbLinkInput); // Depuración
+      const listing = {
+        nombre: document.getElementById('nombre').value,
+        descripcion: document.getElementById('descripcion').value,
+        imagen: document.getElementById('imagen').value,
+        capacidad: parseInt(document.getElementById('capacidad').value),
+        camas: document.getElementById('camas').value,
+        precio: parseFloat(document.getElementById('precio').value),
+        servicios: document.getElementById('servicios').value.split(',').map(s => s.trim()),
+        airbnb_link: airbnbLinkInput || '' // Asegura que no sea undefined
+      };
+      try {
+        console.log('Guardando hospedaje:', id ? 'Actualizar ID ' + id : 'Crear nuevo', 'Payload:', listing);
+        console.log('Token enviado:', localStorage.getItem('token'));
+        const method = id ? 'PUT' : 'POST';
+        const url = id ? `http://localhost:5001/api/listings/${id}` : 'http://localhost:5001/api/listings';
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(listing)
+        });
+        console.log('Respuesta del servidor:', response.status, response.statusText);
+        if (!response.ok) throw new Error('Error al guardar: ' + response.statusText);
+        const result = await response.json();
+        console.log('Datos guardados:', result);
+        listingForm.reset();
+        document.getElementById('listing-id').value = '';
+        loadListings();
+        alert(id ? 'Hospedaje actualizado' : 'Hospedaje creado');
+      } catch (err) {
+        console.error('Error al guardar hospedaje:', err);
+        alert('Error al guardar hospedaje: ' + err.message);
+      }
+    });
+
+    window.editListing = async (id) => {
+      try {
+        console.log('Cargando hospedaje para editar:', id);
+        const response = await fetch(`http://localhost:5001/api/listings/${id}`);
+        if (!response.ok) throw new Error('No encontrado');
+        const listing = await response.json();
+        document.getElementById('listing-id').value = listing.id;
+        document.getElementById('nombre').value = listing.nombre;
+        document.getElementById('descripcion').value = listing.descripcion;
+        document.getElementById('imagen').value = listing.imagen;
+        document.getElementById('capacidad').value = listing.capacidad;
+        document.getElementById('camas').value = listing.camas;
+        document.getElementById('precio').value = listing.precio;
+        document.getElementById('servicios').value = listing.servicios.join(', ');
+        document.getElementById('airbnb_link').value = listing.airbnb_link || '';
+      } catch (err) {
+        console.error('Error al cargar hospedaje:', err);
+        alert('Error al cargar hospedaje para editar: ' + err.message);
+      }
+    };
+
+    window.deleteListing = async (id) => {
+      if (confirm('¿Estás seguro de eliminar este hospedaje?')) {
+        try {
+          console.log('Eliminando hospedaje:', id);
+          const response = await fetch(`http://localhost:5001/api/listings/${id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+          });
+          if (!response.ok) throw new Error('Error al eliminar');
+          loadListings();
+          alert('Hospedaje eliminado');
+        } catch (err) {
+          console.error('Error al eliminar:', err);
+          alert('Error al eliminar: ' + err.message);
+        }
+      }
+    };
+  }
+
   // Smooth scrolling para enlaces de menú
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {

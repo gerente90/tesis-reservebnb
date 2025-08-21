@@ -41,20 +41,26 @@ ul {
 }
 
 .btn-primary {
-    display: inline-block;
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 4px;
-    font-weight: 600;
-    transition: var(--transition);
-    border: none;
-    cursor: pointer;
+  display: inline-block !important;
+  background-color: #ff5a5f; /* Color de Airbnb */
+  color: white;
+  padding: 12px 25px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
 }
-
+.btn-primary[href="#"] {
+  display: inline-block !important; /* Asegura visibilidad con href="#" */
+  opacity: 1 !important;
+  background-color: #ccc; /* Color gris para enlaces no válidos */
+}
 .btn-primary:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
+  background-color: #e04e52;
+  transform: translateY(-2px);
 }
 
 .section-title {
