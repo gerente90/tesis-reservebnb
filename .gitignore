@@ -26,3 +26,9 @@ docker-compose.override.yml
 
 # Ignorar archivos de pruebas o privados
 backend/hash.js
+# Ignorar builds, caches y dist
+dist/
+build/
+.cache/
+.next/
+*.tsbuildinfo
