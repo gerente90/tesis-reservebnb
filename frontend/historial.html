@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservebnb - Historial de Solicitudes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Reservebnb</h1>
+                <p>Tu historial de aventuras</p>
+            </div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html#inicio">Inicio</a></li>
+                    <li><a href="index.html#habitaciones">Habitaciones</a></li>
+                    <li><a href="index.html#tours">Tours</a></li>
+                    <li><a href="index.html#servicios">Servicios</a></li>
+                    <li><a href="#historial">Historial</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li id="nav-user-item" class="nav-user-chip" style="display:none;">
+                        <span id="nav-user-name">Cliente</span>
+                        <button id="nav-customer-logout" title="Cerrar sesión">&times;</button>
+                    </li>
+                    <li id="nav-login-item">
+                        <button id="open-auth-modal" class="btn-secondary btn-login-nav">Ingresar</button>
+                    </li>
+                    <li class="reserva-btn"><a href="index.html#reservar">Reservar</a></li>
+                </ul>
+            </nav>
+            <button id="menu-toggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" style="height: 50vh;">
+            <div class="hero-content">
+                <h2>Historial de Reservas</h2>
+                <p>Consulta todas tus solicitudes de hospedajes y tours en un solo lugar.</p>
+                <a href="index.html#reservar" class="btn-primary">Nueva solicitud</a>
+            </div>
+        </section>
+
+        <section id="historial" class="my-reservations">
+            <div class="container">
+                <h2 class="section-title">Tu historial completo</h2>
+                <p class="section-subtitle">Aquí verás cada solicitud enviada con su estado actual.</p>
+                <div class="reservations-list" id="reservations-container">
+                    <p id="no-reservations">Inicia sesión para consultar el estado de tus solicitudes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="auth-section">
+            <div class="container">
+                <div id="customer-info" class="auth-card" style="display:none;">
+                    <h3>Hola, <span id="customer-name"></span></h3>
+                    <p>Este es tu registro personal de tours y hospedajes solicitados.</p>
+                    <button id="customer-logout" type="button" class="btn-secondary">Cerrar sesión</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Reservebnb hospedajes</h3>
+                    <p>Redefiniendo la experiencia de airbnbs con comodidad y servicio excepcional.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html#inicio">Inicio</a></li>
+                        <li><a href="index.html#habitaciones">Habitaciones</a></li>
+                        <li><a href="index.html#tours">Tours</a></li>
+                        <li><a href="index.html#servicios">Servicios</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Cancelación</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 reservebnb. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="auth-modal" class="auth-modal" aria-hidden="true">
+        <div class="auth-dialog">
+            <button id="close-auth-modal" class="close-auth">&times;</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Iniciar sesión</button>
+                <button class="auth-tab" data-tab="register">Crear cuenta</button>
+            </div>
+            <div class="role-switch" id="role-switch">
+                <button class="role-btn active" data-role="cliente">Cliente</button>
+                <button class="role-btn" data-role="admin">Administrador</button>
+            </div>
+            <form id="modal-login-form" class="auth-form active" data-tab="login">
+                <div class="form-group">
+                    <label for="modal-login-email">Correo electrónico</label>
+                    <input type="email" id="modal-login-email" required placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="modal-login-password">Contraseña</label>
+                    <input type="password" id="modal-login-password" required placeholder="********">
+                </div>
+                <button type="submit" class="btn-primary full-width">Acceder</button>
+                <p class="helper-text">Selecciona si ingresarás como cliente o administrador.</p>
+            </form>
+            <form id="modal-register-form" class="auth-form" data-tab="register">
+                <div class="form-group">
+                    <label for="modal-register-name">Nombre completo</label>
+                    <input type="text" id="modal-register-name" required placeholder="Nombre y apellido">
+                </div>
+                <div class="form-group">
+                    <label for="modal-register-phone">Teléfono (opcional)</label>
+                    <input type="text" id="modal-register-phone" placeholder="+593...">
+                </div>
+                <div class="form-group">
+                    <label for="modal-register-email">Correo electrónico</label>
+                    <input type="email" id="modal-register-email" required placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="modal-register-password">Contraseña</label>
+                    <input type="password" id="modal-register-password" required placeholder="********">
+                </div>
+                <button type="submit" class="btn-primary full-width">Crear cuenta</button>
+                <p class="helper-text">La creación de cuenta es sólo para clientes finales.</p>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

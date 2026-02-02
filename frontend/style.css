@@ -31,6 +31,10 @@ body {
     padding: 0 15px;
 }
 
+.admin-page .container {
+    max-width: 1600px;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -61,6 +65,24 @@ ul {
 .btn-primary:hover {
   background-color: #e04e52;
   transform: translateY(-2px);
+}
+
+.btn-secondary {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: var(--secondary-color);
+    color: #fff;
 }
 
 .section-title {
@@ -108,6 +130,22 @@ header .container {
     padding: 15px 20px;
 }
 
+.admin-logo {
+    text-decoration: none;
+    color: inherit;
+}
+
+.admin-logo .logo p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-style: normal;
+    margin-top: 4px;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
 .logo h1 {
     color: var(--primary-color);
     font-size: 1.8rem;
@@ -121,7 +159,9 @@ header .container {
 
 nav ul {
     display: flex;
+    align-items: center;
 }
+
 
 nav ul li {
     margin-left: 30px;
@@ -131,6 +171,49 @@ nav ul li a {
     font-weight: 600;
     transition: var(--transition);
     position: relative;
+}
+
+.btn-login-nav {
+    margin-top: 0;
+    padding: 9px 22px;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 0 8px 16px rgba(52, 152, 219, 0.2);
+    font-weight: 700;
+    font-size: 1rem;
+}
+.btn-login-nav:hover,
+.btn-login-nav:focus {
+    background-color: #2f89c6;
+    border-color: #2f89c6;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.nav-user-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(52, 152, 219, 0.1);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    border: 1px solid rgba(52, 152, 219, 0.4);
+}
+
+.nav-user-chip button {
+    background: transparent;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.nav-user-chip button:hover {
+    color: var(--accent-color);
 }
 
 nav ul li a:hover {
@@ -286,6 +369,87 @@ nav ul li a:hover::after {
     margin-top: 15px;
 }
 
+.room-note {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 6px;
+}
+
+.room-card {
+    cursor: pointer;
+}
+
+.listing-detail-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+
+.listing-detail-media img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+.listing-detail-info h2 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.listing-detail-city {
+    color: var(--text-light);
+    margin-bottom: 14px;
+}
+
+.listing-detail-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 12px 0 18px;
+}
+
+.listing-detail-price {
+    font-size: 1.1rem;
+    margin: 12px 0 16px;
+}
+
+.listing-detail-extra {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-top: 6px;
+}
+
+.listing-detail-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.listing-detail-services {
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+}
+
+.listing-detail-services ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+@media (max-width: 900px) {
+    .listing-detail-card {
+        grid-template-columns: 1fr;
+    }
+}
+
 .price {
     font-size: 1.4rem;
     font-weight: 700;
@@ -354,6 +518,28 @@ nav ul li a:hover::after {
     padding: 30px;
     border-radius: 8px;
     box-shadow: var(--shadow);
+}
+
+.rooms-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.rooms-filter label {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.rooms-filter select {
+    min-width: 200px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #d5d9df;
+    background: #fff;
 }
 
 .form-group {
@@ -464,6 +650,21 @@ nav ul li a:hover::after {
 .status.pending {
     background-color: #fff3cd;
     color: #856404;
+}
+
+.status.pendiente {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: #f39c12;
+}
+
+.status.aceptada {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+}
+
+.status.rechazada {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
 }
 
 .cancel-btn {
@@ -604,6 +805,331 @@ footer {
     font-size: 0.9rem;
 }
 
+.auth-section {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.auth-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.auth-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 25px;
+}
+
+.auth-card h3 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.auth-card .form-group {
+    margin-bottom: 15px;
+}
+
+.auth-card label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.auth-card input,
+.auth-card textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+#admin-hospedajes textarea {
+    min-height: 180px;
+    width: 100%;
+    resize: vertical;
+}
+
+.admin-tabs {
+    display: flex;
+    gap: 12px;
+    margin: 50px 0 30px;
+    flex-wrap: wrap;
+}
+
+.admin-tab {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.admin-tab-hospedajes {
+    background: #1e88e5;
+}
+
+.admin-tab-tours {
+    background: #2e7d32;
+}
+
+.admin-tab-requests {
+    background: #2e7d32;
+}
+
+.admin-tab-tours {
+    background: #f2b705;
+    color: #2c2c2c;
+}
+
+.admin-page.admin-view-requests {
+    background: #ffffff;
+}
+
+.admin-page.admin-view-hospedajes {
+    background: linear-gradient(135deg, #d6ebff 0%, #ffffff 60%);
+}
+
+.admin-page.admin-view-tours {
+    background: linear-gradient(135deg, #fff7db 0%, #ffffff 60%);
+}
+
+.admin-tab:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.admin-tab:active {
+    transform: translateY(0);
+    opacity: 0.9;
+}
+
+.admin-tab.active {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35) inset;
+}
+
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.admin-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.admin-btn:active {
+    transform: translateY(0);
+    opacity: 0.9;
+}
+
+.admin-btn-primary {
+    background: #ff5a5f;
+    color: #fff;
+}
+
+.admin-btn-success {
+    background: #2e7d32;
+    color: #fff;
+}
+
+.admin-btn-warning {
+    background: #f2b705;
+    color: #2c2c2c;
+}
+
+.admin-btn-danger {
+    background: #d32f2f;
+    color: #fff;
+}
+
+.admin-btn + .admin-btn {
+    margin-left: 8px;
+}
+#admin-hospedajes textarea {
+    min-height: 180px;
+    width: 100%;
+    resize: vertical;
+}
+
+#customer-info {
+    border-left: 4px solid var(--secondary-color);
+    margin-bottom: 30px;
+}
+
+.auth-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2500;
+    padding: 20px;
+}
+
+.auth-modal.active {
+    display: flex;
+}
+
+.auth-dialog {
+    background: #e0e5ec;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+    padding: 30px;
+    position: relative;
+}
+
+.close-auth {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #7f8c8d;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #e0e5ec;
+    box-shadow: inset 5px 5px 10px #c2c8d0, inset -5px -5px 10px #ffffff;
+    transition: var(--transition);
+}
+
+.auth-tab.active {
+    background: #d7dee8;
+    color: var(--primary-color);
+}
+
+.role-switch {
+    display: flex;
+    justify-content: space-between;
+    background: #e0e5ec;
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: inset 5px 5px 10px #c2c8d0, inset -5px -5px 10px #ffffff;
+    margin-bottom: 20px;
+}
+
+.role-switch.hidden {
+    display: none;
+}
+
+.role-btn {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.role-btn.active {
+    background: #2c3e50;
+    color: #fff;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.auth-form .form-group {
+    margin-bottom: 15px;
+}
+
+.auth-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--primary-color);
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #e0e5ec;
+    box-shadow: inset 4px 4px 8px #c2c8d0, inset -4px -4px 8px #ffffff;
+}
+
+.password-field {
+    position: relative;
+}
+
+.password-field input {
+    padding-right: 46px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #6c7a89;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 4px;
+}
+
+.toggle-password:focus-visible {
+    outline: 2px solid var(--secondary-color);
+    border-radius: 6px;
+}
+
+.auth-form .helper-text {
+    margin-top: 10px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
 /* Modal */
 .modal {
     display: none;
@@ -641,6 +1167,100 @@ footer {
 
 .close-modal:hover {
     color: var(--accent-color);
+}
+
+.booking-modal .modal-content {
+    max-width: 600px;
+    text-align: left;
+}
+
+.booking-item-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.modal-subtitle,
+.modal-hint {
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.booking-modal .form-group {
+    margin-bottom: 15px;
+}
+
+.booking-modal input,
+.booking-modal textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.booking-modal .price-summary {
+    margin: 20px 0;
+    font-size: 1.2rem;
+}
+
+.booking-modal .price-summary span {
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.transfer-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.requests-list {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.request-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.request-card h4 {
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.request-card .status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+.request-card .status.pendiente {
+    background: rgba(243, 156, 18, 0.1);
+    color: #f39c12;
+}
+
+.request-card .status.aceptada {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.request-card .status.rechazada {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.request-card .actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 /* Animations */

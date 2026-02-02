@@ -6,58 +6,144 @@
   <title>Admin Dashboard - Reservebnb</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="admin-page admin-view-hospedajes">
   <header>
     <div class="container">
-      <div class="logo">
-        <h1>Reservebnb</h1>
-        <p>Admin Dashboard</p>
-      </div>
-      <button id="logout-btn" class="btn-primary">Cerrar Sesión</button>
+      <a href="admin.html" class="admin-logo">
+        <div class="logo">
+          <h1>Reservebnb</h1>
+          <p>Admin Dashboard</p>
+        </div>
+      </a>
+      <button id="logout-btn" class="admin-btn admin-btn-danger">Cerrar Sesión</button>
     </div>
   </header>
+
   <section class="admin-section" style="padding: 80px 0;">
     <div class="container">
-      <h2 class="section-title">Administrar Hospedajes</h2>
-      <form id="listing-form">
-        <input type="hidden" id="listing-id">
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" required>
+      <!-- Tabs para cambiar entre Hospedajes y Tours -->
+      <div class="admin-tabs">
+        <button id="tab-requests" class="admin-tab admin-tab-requests" type="button">Solicitudes</button>
+        <button id="tab-hospedajes" class="admin-tab admin-tab-hospedajes active" type="button">Hospedajes</button>
+        <button id="tab-tours" class="admin-tab admin-tab-tours" type="button">Tours</button>
+      </div>
+
+      <div id="admin-requests" class="admin-section" style="display: none;">
+        <h2 class="section-title">Solicitudes por transferencia</h2>
+        <p class="section-subtitle">Aprueba o rechaza las solicitudes enviadas por los clientes.</p>
+        <div id="requests-list" class="requests-list">
+          <p id="requests-empty">No hay solicitudes en este momento.</p>
         </div>
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="imagen">URL de Imagen:</label>
-            <input type="text" id="imagen" required>
-        </div>
-        <div class="form-group">
-            <label for="capacidad">Capacidad:</label>
-            <input type="number" id="capacidad" required>
-        </div>
-        <div class="form-group">
-            <label for="camas">Camas:</label>
-            <input type="text" id="camas" required>
-        </div>
-        <div class="form-group">
-            <label for="precio">Precio por Noche:</label>
-            <input type="number" id="precio" step="0.01" required>
-        </div>
-        <div class="form-group">
-            <label for="servicios">Servicios (separados por comas):</label>
-            <input type="text" id="servicios" required>
-        </div>
-        <div class="form-group">
-            <label for="airbnb_link">Link de Airbnb:</label>
-            <input type="text" id="airbnb_link" placeholder="https://www.airbnb.com.ec/rooms/..." required>
-        </div>
-        <button type="submit" class="btn-primary">Guardar</button>
+      </div>
+
+      <!-- ===== HOSPEDAJES ===== -->
+      <div id="admin-hospedajes">
+        <h2 class="section-title">Administrar Hospedajes</h2>
+        <form id="listing-form">
+          <input type="hidden" id="listing-id">
+          <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" id="nombre" required>
+          </div>
+          <div class="form-group">
+              <label for="descripcion">Descripción:</label>
+              <textarea id="descripcion" required></textarea>
+          </div>
+          <div class="form-group">
+              <label for="imagen">URL de Imagen:</label>
+              <input type="text" id="imagen" required>
+          </div>
+          <div class="form-group">
+              <label for="ciudad">Ciudad:</label>
+              <input type="text" id="ciudad" required>
+          </div>
+          <div class="form-group">
+              <label for="capacidad">Capacidad:</label>
+              <input type="number" id="capacidad" min="1" step="1" required>
+          </div>
+          <div class="form-group">
+              <label for="camas">Camas:</label>
+              <input type="number" id="camas" min="1" step="1" required>
+          </div>
+          <div class="form-group">
+              <label for="precio">Precio por Noche Base:</label>
+              <input type="number" id="precio" step="0.01" min="0" required>
+          </div>
+          <div class="form-group">
+              <label for="tarifa_adicional">Tarifa por huésped adicional:</label>
+              <input type="number" id="tarifa_adicional" step="0.01" min="0" value="0">
+          </div>
+          <div class="form-group">
+              <label for="adicional_desde">Aplicar desde (número de huéspedes):</label>
+              <input type="number" id="adicional_desde" min="1" step="1" value="1">
+          </div>
+          <div class="form-group">
+              <label for="servicios">Servicios (separados por comas):</label>
+              <input type="text" id="servicios" required>
+          </div>
+          <div class="form-group">
+              <label for="airbnb_link">Link de Airbnb:</label>
+              <input type="text" id="airbnb_link" placeholder="https://www.airbnb.com.ec/rooms/..." required>
+          </div>
+          <div class="form-group">
+              <label for="airbnb_ical_url">Link iCal de Airbnb:</label>
+              <input type="text" id="airbnb_ical_url" placeholder="https://www.airbnb.com.ec/calendar/ical/...">
+          </div>
+          <button type="submit" class="admin-btn admin-btn-success">Guardar</button>
         </form>
-      <div id="listings-list" style="margin-top: 40px;"></div>
+        <div id="listings-list" style="margin-top: 40px;"></div>
+      </div>
+
+      <!-- ===== TOURS ===== -->
+      <div id="admin-tours" style="display: none;">
+        <h2 class="section-title">Administrar Tours</h2>
+        <form id="tour-form">
+          <input type="hidden" id="tour-id">
+          <div class="form-group">
+            <label for="tour-nombre">Nombre del tour:</label>
+            <input type="text" id="tour-nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="tour-descripcion">Descripción:</label>
+            <textarea id="tour-descripcion" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="tour-imagen">URL de Imagen:</label>
+            <input type="text" id="tour-imagen">
+          </div>
+          <div class="form-group">
+            <label for="tour-duracion">Duración (horas):</label>
+            <input type="number" id="tour-duracion" min="1">
+          </div>
+          <div class="form-group">
+            <label for="tour-precio">Precio por persona / tour:</label>
+            <input type="number" id="tour-precio" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="tour-cupo">Cupo máximo:</label>
+            <input type="number" id="tour-cupo" min="1">
+          </div>
+          <div class="form-group">
+            <label for="tour-punto">Punto de encuentro:</label>
+            <input type="text" id="tour-punto">
+          </div>
+          <div class="form-group">
+            <label for="tour-servicios">Servicios incluidos (separados por comas):</label>
+            <input type="text" id="tour-servicios">
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="tour-activo" checked>
+              Tour activo
+            </label>
+          </div>
+          <button type="submit" class="admin-btn admin-btn-success">Guardar tour</button>
+        </form>
+        <div id="tours-list" style="margin-top: 40px;"></div>
+      </div>
     </div>
   </section>
+
   <script src="script.js"></script>
 </body>
 </html>

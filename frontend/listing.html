@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Hospedaje - Reservebnb</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <div class="logo">
+                    <h1>Reservebnb</h1>
+                    <p>Detalle de hospedaje</p>
+                </div>
+            </a>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html#inicio">Inicio</a></li>
+                    <li><a href="index.html#habitaciones">Habitaciones</a></li>
+                    <li><a href="index.html#tours">Tours</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li id="nav-user-item" class="nav-user-chip" style="display:none;">
+                        <span id="nav-user-name">Cliente</span>
+                        <button id="nav-customer-logout" title="Cerrar sesión">&times;</button>
+                    </li>
+                    <li id="nav-login-item">
+                        <button id="open-auth-modal" class="btn-secondary btn-login-nav">Ingresar</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: 120px;">
+        <section class="rooms-section">
+            <div class="container" id="listing-detail">
+                <p>Cargando hospedaje...</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="booking-modal" class="modal booking-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-booking-modal">&times;</button>
+            <h2>Pago por transferencia</h2>
+            <p class="modal-subtitle">Completa los datos y te contactaremos para validar el pago.</p>
+            <form id="booking-request-form">
+                <div class="form-group">
+                    <label>Servicio</label>
+                    <p id="booking-item-name" class="booking-item-name"></p>
+                </div>
+                <div class="form-group">
+                    <label for="booking-start">Fecha de inicio</label>
+                    <input type="date" id="booking-start" required>
+                </div>
+                <div class="form-group" id="booking-end-wrapper">
+                    <label for="booking-end">Fecha de salida</label>
+                    <input type="date" id="booking-end">
+                </div>
+                <div class="form-group">
+                    <label for="booking-people">Personas</label>
+                    <input type="number" id="booking-people" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-notes">Referencia de transferencia / notas</label>
+                    <textarea id="booking-notes" placeholder="Incluye el banco, número de comprobante u observaciones"></textarea>
+                </div>
+                <div class="price-summary">
+                    <p>Total estimado: <span id="booking-total">$0</span></p>
+                </div>
+                <button type="submit" class="btn-primary">Enviar solicitud</button>
+            </form>
+            <p class="modal-hint">El administrador confirmará manualmente si el pago fue recibido.</p>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="auth-modal" aria-hidden="true">
+        <div class="auth-dialog">
+            <button id="close-auth-modal" class="close-auth">&times;</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Iniciar sesión</button>
+                <button class="auth-tab" data-tab="register">Crear cuenta</button>
+            </div>
+            <div class="role-switch" id="role-switch">
+                <button class="role-btn active" data-role="cliente">Cliente</button>
+                <button class="role-btn" data-role="admin">Administrador</button>
+            </div>
+            <form id="modal-login-form" class="auth-form active" data-tab="login">
+                <div class="form-group">
+                    <label for="modal-login-email">Correo electrónico</label>
+                    <input type="email" id="modal-login-email" required placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="modal-login-password">Contraseña</label>
+                    <div class="password-field">
+                        <input type="password" id="modal-login-password" required placeholder="********">
+                        <button type="button" class="toggle-password" data-target="modal-login-password" aria-label="Mostrar contraseña">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Acceder</button>
+                <p class="helper-text">Selecciona si ingresarás como cliente o administrador.</p>
+            </form>
+            <form id="modal-register-form" class="auth-form" data-tab="register">
+                <div class="form-group">
+                    <label for="modal-register-name">Nombre completo</label>
+                    <input type="text" id="modal-register-name" required placeholder="Nombre y apellido">
+                </div>
+                <div class="form-group">
+                    <label for="modal-register-phone">Teléfono (opcional)</label>
+                    <input type="text" id="modal-register-phone" placeholder="+593...">
+                </div>
+                <div class="form-group">
+                    <label for="modal-register-email">Correo electrónico</label>
+                    <input type="email" id="modal-register-email" required placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="modal-register-password">Contraseña</label>
+                    <div class="password-field">
+                        <input type="password" id="modal-register-password" required placeholder="********">
+                        <button type="button" class="toggle-password" data-target="modal-register-password" aria-label="Mostrar contraseña">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary full-width">Crear cuenta</button>
+                <p class="helper-text">La creación de cuenta es sólo para clientes finales.</p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="script.js"></script>
+</body>
+</html>
